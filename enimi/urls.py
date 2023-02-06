@@ -19,12 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 from board_tutors_students.views.base import BoardTutorView, BoardStudentView
-from enimi.views import IndexView
+from enimi.views import IndexView, EmailVerifyView
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('auth/', include('accounts.urls')),
                   path('', IndexView.as_view(), name='index'),
+                  path('email-verify/', EmailVerifyView.as_view(), name='email_verify_page'),
                   path('cabinet_parents/', include('cabinet_parents.urls')),
                   path('cabinet_student/', include('cabinet_student.urls')),
                   path('cabinet_tutors/', include('cabinet_tutors.urls')),

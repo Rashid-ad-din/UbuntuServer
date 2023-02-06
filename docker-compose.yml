@@ -1,0 +1,47 @@
+version: '3'
+
+
+services:
+  db:
+    image: postgres:14.0
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data/
+    environment:
+      - TZ=Asia/Almaty
+      - POSTGRES_DB=new
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=170303
+    ports:
+      - "5432:5432"
+    restart: always
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c 'python manage.py migrate --noinput && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000'
+    volumes:
+      - web_volume:/home/app/web
+      - media:/home/app/web/media
+      - static:/home/app/web/static
+      - logs:/home/app/web/logs:rw
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - TZ=Asia/Almaty
+      - DB_HOST=db
+    restart: always
+
+volumes:
+  postgresql_data:
+  media:
+    external: true
+  static:
+    external: true
+  logs:
+    external: true
+  web_volume:
+
+

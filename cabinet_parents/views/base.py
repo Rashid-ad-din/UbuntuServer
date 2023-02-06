@@ -10,6 +10,7 @@ from cabinet_parents.forms import SurveyForm, TutorAreaForm, StudentAreaForm
 from cabinet_parents.models import Survey, TutorArea, Region, City, District, StudentArea
 from responses.models import Response
 
+
 class ParentProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
     template_name = 'parent_detail.html'
@@ -41,6 +42,7 @@ class ParentCreateChildrenView(CreateView):
             account.type = 'student'
             account.parent = user
             inactive_user = send_verification_email(request, form)
+            account.is_active = True
             # children = Account.objects.filter(is_deleted=False, parent=request.user)
             return redirect('parents_cabinet_detail', pk=user.pk)
         context = {}
@@ -265,6 +267,7 @@ class ToMyChildrenResponsesView(LoginRequiredMixin, ListView):
         context['student_without_email_register_form'] = ChildrenForm
         return context
 
+
 class FromParentOnTutorResponsesView(LoginRequiredMixin, ListView):
     template_name = 'from_me_parent_to_tutor.html'
     model = Response
@@ -289,9 +292,6 @@ class FromParentOnTutorResponsesView(LoginRequiredMixin, ListView):
         context['student_register_form'] = AccountForm()
         context['student_without_email_register_form'] = ChildrenForm
         return context
-
-
-
 
 # class GetDataForSurveysView(CreateView):
 #     model = Account

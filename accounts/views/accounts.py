@@ -19,29 +19,17 @@ class AccountCreateView(CreateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
         user = request.user
-
         if form.is_valid():
             account = form.save(commit=False)
             account.type = kwargs['type']
             account.username = account.email
-            # inactive_user = send_verification_email(request, form)
+            inactive_user = send_verification_email(request, form)
             account.is_active = True
-            account.save()
-            registration(account)
-            login(request, account)
-            if account.type == 'parents':
-                return redirect('parents_cabinet_detail',
-                                pk=account.pk)
             if account.type == 'tutor':
                 tutor = TutorCabinets.objects.create(
                     user=account
                 )
-                return redirect('tutor_cabinet',
-                                pk=tutor.pk)
-            if account.type == 'student':
-                return redirect('student_cabinet_detail',
-                                pk=account.pk)
-            return redirect('index')
+            return redirect('email_verify_page')
         context = {}
         context['form'] = form
         return self.render_to_response(context)

@@ -10,3 +10,6 @@ class IndexView(TemplateView):
         context['types'] = UserCategoryChoices.choices
         return context
 
+
+class EmailVerifyView(TemplateView):
+    template_name = 'email_verify_page.html'
