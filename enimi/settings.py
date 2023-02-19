@@ -38,7 +38,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 LOGIN_URL = 'login_page'
 DEFAULT_FROM_EMAIL = 'enemi<no_reply@domain.com>'
 
-ALLOWED_HOSTS = ['0.0.0.0', '91.107.157.33']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 

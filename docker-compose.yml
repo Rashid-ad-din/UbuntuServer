@@ -8,9 +8,9 @@ services:
       - postgresql_data:/var/lib/postgresql/data/
     environment:
       - TZ=Asia/Almaty
-      - POSTGRES_DB=new
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=170303
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     restart: always
@@ -31,17 +31,21 @@ services:
       - db
     environment:
       - TZ=Asia/Almaty
-      - DB_HOST=db
+      - SECRET_KEY=${SECRET_KEY}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - EMAIL_ID=${EMAIL_ID}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
     restart: always
 
 volumes:
   postgresql_data:
   media:
-    external: true
   static:
-    external: true
   logs:
-    external: true
   web_volume:
 
 
