@@ -46,8 +46,8 @@ services:
   nginx:
     build: ./nginx
     volumes:
-        - ./static:/home/user/enimi/static
-        - ./uploads:/home/user/enimi/uploads:rw
+        - ./static:/enimi/static
+        - ./uploads:/enimi/uploads:rw
         - /etc/letsencrypt/live/enimi-edu.hopto.org/fullchain.pem:/etc/letsencrypt/live/enimi-edu.hopto.org/fullchain.pem
         - /etc/letsencrypt/live/enimi-edu.hopto.org/privkey.pem:/etc/letsencrypt/live/enimi-edu.hopto.org/privkey.pem
     ports:
